@@ -12,6 +12,7 @@ import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -53,9 +54,9 @@ public class AlloyDBEngine {
                     .createScoped("https://www.googleapis.com/auth/userinfo.email");
             credentials.refreshIfExpired();
             // Check if credentials are service account credentials
-            if (credentials instanceof com.google.auth.oauth2.ServiceAccountCredentials serviceAccountCredentials) {
+            if (credentials instanceof com.google.auth.oauth2.ServiceAccountCredentials) {
                 // Get the service account email
-                String userEmail = serviceAccountCredentials.getClientEmail();
+                String userEmail = ((ServiceAccountCredentials)credentials).getClientEmail();
                 if (isNullOrBlank(userEmail)) {
                     String accessToken = credentials.getAccessToken().getTokenValue();
 
