@@ -91,13 +91,13 @@ So, `AiService` will automatically convert it into a `UserMessage` and invoke `C
 Since the output type of the `chat` method is a `String`, after `ChatLanguageModel` returns `AiMessage`,
 it will be converted into a `String` before being returned from the `chat` method.
 
-## Using AI Services in Quarkus Application
+## AI Services in Quarkus Application
 [LangChain4j Quarkus extension](https://docs.quarkiverse.io/quarkus-langchain4j/dev/index.html)
 greatly simplifies using AI Services in Quarkus applications.
 
 More information can be found [here](https://docs.quarkiverse.io/quarkus-langchain4j/dev/ai-services.html).
 
-## Using AI Services in Spring Boot Application
+## AI Services in Spring Boot Application
 [LangChain4j Spring Boot starter](/tutorials/spring-boot-integration)
 greatly simplifies using AI Services in Spring Boot applications.
 
@@ -243,6 +243,10 @@ String chat(@V("country") String country);
 String chat(@V("answerInstructions") String answerInstructions, @V("country") String country);
 ```
 </details>
+
+## Multimodality
+AI services currently do not support multimodality,
+please use the [low-level API](/tutorials/chat-and-language-models#multimodality) for this.
 
 ## Structured Outputs
 If you want to receive a structured output from the LLM,
@@ -528,7 +532,7 @@ For this, please import `langchain4j-reactor` module:
 <dependency>
     <groupId>dev.langchain4j</groupId>
     <artifactId>langchain4j-reactor</artifactId>
-    <version>0.35.0</version>
+    <version>0.36.0</version>
 </dependency>
 ```
 ```java
@@ -623,7 +627,7 @@ More details about tools can be found [here](/tutorials/tools#high-level-tool-ap
 
 ## RAG
 
-AI Service can be configured with a `ContentRetriever` in order to enable RAG:
+AI Service can be configured with a `ContentRetriever` in order to enable [naive RAG](/tutorials/rag#naive-rag):
 ```java
 
 EmbeddingStore embeddingStore  = ...
@@ -638,7 +642,7 @@ Assistant assistant = AiServices.builder(Assistant.class)
 ```
 
 Configuring a `RetrievalAugmentor` provides even more flexibility,
-enabling advanced RAG capabilities such as query transformation, re-ranking, etc:
+enabling [advanced RAG](/tutorials/rag#advanced-rag) capabilities such as query transformation, re-ranking, etc:
 ```java
 RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
         .queryTransformer(...)
